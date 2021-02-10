@@ -17,6 +17,8 @@ public class PlayerAction : MonoBehaviour
         Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         this.transform.position += Movement * speed * Time.deltaTime;
     }
+    //Code from: https://answers.unity.com/questions/855976/make-a-player-model-rotate-towards-mouse-location.html
+    //character rotation towards mouse 
     void Update () 
      {
          
