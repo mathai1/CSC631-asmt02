@@ -18,7 +18,7 @@ public class PlayerAction : MonoBehaviour
         this.transform.position += Movement * speed * Time.deltaTime;
     }
     void Update () 
-     {
+    {
          
          //Get the Screen positions of the object
          Vector2 positionOnScreen = UnityEngine.Camera.main.WorldToViewportPoint (transform.position);
@@ -31,11 +31,22 @@ public class PlayerAction : MonoBehaviour
  
          //Ta Daaa
          transform.rotation =  Quaternion.Euler (new Vector3(0f,angle,0f));
-     }
- 
-     float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
-         return Mathf.Atan2(a.x -b.x, a.y -b.y) * Mathf.Rad2Deg;
-     }
 
+        //Shoot me pls
+         ShootingUpdate();
+    }
+ 
+    float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
+        return Mathf.Atan2(a.x -b.x, a.y -b.y) * Mathf.Rad2Deg;
+    }
+
+    void ShootingUpdate()
+    {
+        //if left mouse button
+        if (Input.GetButton("Fire1"))
+        {
+            WeaponScript.gun.Shoot();
+        }
+    }
     
 }

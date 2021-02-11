@@ -4,11 +4,30 @@ using UnityEngine;
 
 public class WeaponScript : MonoBehaviour
 {
+    [SerializeField]
+    Transform pointOfFire;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    [SerializeField]
+    GameObject bulletPrefab;
+
+    [SerializeField]
+    float attackSpeed;
+
+    private float lastShot = 0;
+    public static WeaponScript gun;
+
+    //Awake is called when the object is initialized
+    void Awake(){
+        gun = GetComponent<WeaponScript>();
     }
-    
+
+    public void Shoot(){
+        if (lastShot + attackSpeed <= Time.time){
+            //sets lastShot to a new time
+            lastShot = Time.time;
+
+            //instantiates the bullet
+            Instantiate(bulletPrefab, pointOfFire.position, pointOfFire.rotation);
+        }
+    }
 }
