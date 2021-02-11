@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody rb;
     private Vector3 movement;
     public float moveSpeed;
+ 
     // Start is called before the first frame update
     void Start()
     {
