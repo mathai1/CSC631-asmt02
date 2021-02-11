@@ -6,14 +6,17 @@ public class EnemyMovement : MonoBehaviour
 {
     //Code From: https://www.youtube.com/watch?v=4Wh22ynlLyk
     public Transform player;
+    public GameObject enemy;
     private Rigidbody rb;
     private Vector3 movement;
     public float moveSpeed;
- 
+    public int health;
+    
     // Start is called before the first frame update
     void Start()
     {
         rb=this.GetComponent<Rigidbody>();
+        enemy.SetActive(true);
     }
 
     // Update is called once per frame
@@ -26,6 +29,10 @@ public class EnemyMovement : MonoBehaviour
 
         direction.Normalize();
         movement =direction;
+        if (health <= 0)
+        {
+            enemy.SetActive(false);
+        }
     }
     void FixedUpdate(){
         moveEnemy(movement);
@@ -36,6 +43,9 @@ public class EnemyMovement : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-            Debug.Log("Enemy hit");
+        if (other.collider.tag=="Bullet")
+        {
+           health-=25;
+        }
     }
 }
