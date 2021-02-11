@@ -50,5 +50,9 @@ public class PlayerAction : MonoBehaviour
             WeaponScript.gun.Shoot();
         }
     }
+    void OnCollisionEnter(Collision other)
+    {
+            Debug.Log("Player hit");
+    }
     
 }

@@ -33,4 +33,9 @@ public class EnemyMovement : MonoBehaviour
     void moveEnemy(Vector3 direction){
         rb.MovePosition(transform.position +(direction *moveSpeed *Time.deltaTime));
     }
+
+    void OnCollisionEnter(Collision other)
+    {
+            Debug.Log("Enemy hit");
+    }
 }
