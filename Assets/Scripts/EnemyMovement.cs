@@ -7,6 +7,8 @@ public class EnemyMovement : MonoBehaviour
     //Code From: https://www.youtube.com/watch?v=4Wh22ynlLyk
     public Transform player;
     public GameObject enemy;
+    public GameObject player1;
+    public GameObject player2;
     private Rigidbody rb;
     private Vector3 movement;
     public float moveSpeed;
@@ -17,6 +19,12 @@ public class EnemyMovement : MonoBehaviour
     {
         rb=this.GetComponent<Rigidbody>();
         enemy.SetActive(true);
+        if (PlayerPrefs.GetString("Player")=="Player1"){
+            player=player1.transform;
+        }
+        if (PlayerPrefs.GetString("Player")=="Player2"){
+            player=player2.transform;
+        }
     }
 
     // Update is called once per frame
