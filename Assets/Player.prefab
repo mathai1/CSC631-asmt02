@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5653956395151996104}
   - component: {fileID: 5653956395151996105}
   - component: {fileID: 5653956395151996106}
-  - component: {fileID: 5653956395151996107}
   m_Layer: 10
   m_Name: Player
   m_TagString: Player
@@ -111,7 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5653956395151996106}
+  goldObj: {fileID: 0}
   speed: 200
+  gold: 0
 --- !u!54 &5653956395151996106
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -128,18 +129,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &5653956395151996107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5653956395151996100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57b82654c9c1fe1468dbb3b6fc24579d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5653956395300299052
 GameObject:
   m_ObjectHideFlags: 0

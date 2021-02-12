@@ -1,12 +1,13 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerAction : MonoBehaviour
 {
     public Rigidbody rb;
-
+    public GameObject goldObj;
     public int speed;
+    public static int gold;
 
     // Update is called once per frame
     
@@ -50,9 +51,22 @@ public class PlayerAction : MonoBehaviour
             WeaponScript.gun.Shoot();
         }
     }
-    void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision collisionInfo)
     {
-            Debug.Log("Player hit");
+        if (collisionInfo.collider.tag=="BossGold")
+        {
+            Debug.Log(gold);
+            gold += 100;
+            goldObj.SetActive(false);
+            Debug.Log(gold);
+        }
+        if (collisionInfo.collider.tag=="Treasure")
+        {
+            Debug.Log(gold);
+            gold += 1000;
+            goldObj.SetActive(false);
+            Debug.Log(gold);
+        }
     }
     
 }

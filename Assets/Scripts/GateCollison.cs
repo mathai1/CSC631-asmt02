@@ -12,9 +12,6 @@ public class GateCollison : MonoBehaviour
         {
            FindObjectOfType<LevelManager>().nextLevel();
         }
-        else{
-            Debug.Log("Please Kill Enemy First");
-        }
     }
     
 }

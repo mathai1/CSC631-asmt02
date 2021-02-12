@@ -9,6 +9,7 @@ public class EnemyMovement : MonoBehaviour
     public GameObject enemy;
     public GameObject player1;
     public GameObject player2;
+    public GameObject gold;
     private Rigidbody rb;
     private Vector3 movement;
     public float moveSpeed;
@@ -19,6 +20,7 @@ public class EnemyMovement : MonoBehaviour
     {
         rb=this.GetComponent<Rigidbody>();
         enemy.SetActive(true);
+        gold.SetActive(false);
         if (PlayerPrefs.GetString("Player")=="Player1"){
             player=player1.transform;
         }
@@ -39,7 +41,9 @@ public class EnemyMovement : MonoBehaviour
         movement =direction;
         if (health <= 0)
         {
+            gold.transform.position=transform.position;
             enemy.SetActive(false);
+            gold.SetActive(true);
         }
     }
     void FixedUpdate(){

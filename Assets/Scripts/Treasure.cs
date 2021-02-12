@@ -5,17 +5,22 @@ using UnityEngine;
 public class Treasure : MonoBehaviour
 {
     public GameObject treasure;
+    public GameObject gold;
     // Start is called before the first frame update
     void Start()
     {
         treasure.SetActive(true);
+        gold.SetActive(false);
+
     }
     
     void OnCollisionEnter(Collision collisionInfo)
     {
         if (collisionInfo.collider.tag=="Bullet")
         {
-           treasure.SetActive(false);
+            gold.transform.position= transform.position;
+            treasure.SetActive(false);
+            gold.SetActive(true);
         }
         
     }
