@@ -9,6 +9,7 @@ public class Camera : MonoBehaviour
     public Transform player;
     void Start()
     {
+        //get the character that player chooses during character selection
         if (PlayerPrefs.GetString("Player")=="Player1"){
             player1.SetActive(true);
             player2.SetActive(false);

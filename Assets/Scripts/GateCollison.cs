@@ -8,6 +8,7 @@ public class GateCollison : MonoBehaviour
 
     void OnCollisionEnter(Collision collisionInfo)
     {
+        //checking for collision with gate and player
         if (enemy.activeSelf==false && collisionInfo.collider.tag=="Player")
         {
            FindObjectOfType<LevelManager>().nextLevel();

@@ -39,6 +39,7 @@ public class EnemyMovement : MonoBehaviour
 
         direction.Normalize();
         movement =direction;
+        //if health is 0 or less then set active to false and gold drop to true
         if (health <= 0)
         {
             gold.transform.position=transform.position;

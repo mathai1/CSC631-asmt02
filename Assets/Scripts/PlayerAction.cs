@@ -51,8 +51,10 @@ public class PlayerAction : MonoBehaviour
             WeaponScript.gun.Shoot();
         }
     }
+    //checks for the different types of collision
     void OnCollisionEnter(Collision collisionInfo)
     {
+        //Boss drop collision
         if (collisionInfo.collider.tag=="BossGold")
         {
             Debug.Log(gold);
@@ -60,7 +62,8 @@ public class PlayerAction : MonoBehaviour
             goldObj.SetActive(false);
             Debug.Log(gold);
         }
-        if (collisionInfo.collider.tag=="Treasure")
+        //treausre drop collission
+        else if (collisionInfo.collider.tag=="Treasure")
         {
             Debug.Log(gold);
             gold += 1000;
