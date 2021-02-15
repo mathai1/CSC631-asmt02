@@ -13,7 +13,16 @@ public class Treasure : MonoBehaviour
         gold.SetActive(false);
 
     }
-    
+    void OnMouseDown()
+    {
+        //when treasure object is clicked upon
+        gold.transform.position= transform.position;
+        treasure.SetActive(false);
+        gold.SetActive(true);
+
+    }   
+
+    /***
     void OnCollisionEnter(Collision collisionInfo)
     {
         if (collisionInfo.collider.tag=="Bullet")
@@ -24,6 +33,7 @@ public class Treasure : MonoBehaviour
         }
         
     }
+    ***/
 
     
 }
