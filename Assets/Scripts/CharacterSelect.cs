@@ -20,13 +20,19 @@ public class CharacterSelect : MonoBehaviour
     {
         //for select character 1 on character selection screen
         PlayerPrefs.SetString("Player","Player1");
-        SceneManager.LoadScene("BattleRoom");
+        player1.SetActive(true);
+        player2.SetActive(false);
     }
 
     public void Select2()
     {
         //for select character 2 on character selection screen
         PlayerPrefs.SetString("Player","Player2");
+        player1.SetActive(false);
+        player2.SetActive(true);
+    }
+    public void Confirm()
+    {
         SceneManager.LoadScene("BattleRoom");
     }
 }
