@@ -33,7 +33,12 @@ public class CharacterSelect : MonoBehaviour
     }
     public void Confirm()
     {
-        SceneManager.LoadScene("BattleRoom");
+        if(PlayerPrefs.HasKey("Player")==true){
+            SceneManager.LoadScene("BattleRoom");
+        }
+        else{
+            Debug.Log("Please Select a Character");
+        }
     }
 }
 

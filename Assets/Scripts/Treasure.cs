@@ -21,19 +21,5 @@ public class Treasure : MonoBehaviour
         gold.SetActive(true);
 
     }   
-
-    /***
-    void OnCollisionEnter(Collision collisionInfo)
-    {
-        if (collisionInfo.collider.tag=="Bullet")
-        {
-            gold.transform.position= transform.position;
-            treasure.SetActive(false);
-            gold.SetActive(true);
-        }
-        
-    }
-    ***/
-
     
 }
