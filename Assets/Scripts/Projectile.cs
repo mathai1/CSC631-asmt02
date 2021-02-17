@@ -34,7 +34,8 @@ public class Projectile : MonoBehaviour
          Vector3 collidePoint = contact.point;
          Quaternion rotation = Quaternion.FromToRotation (Vector3.up,contact.normal);
 
-         Instantiate(hitPrefab, collidePoint, rotation);
+         GameObject particle = Instantiate(hitPrefab, collidePoint, rotation);
+         Destroy(particle, 0.5f);
          Destroy(this.gameObject);
     }
 }
