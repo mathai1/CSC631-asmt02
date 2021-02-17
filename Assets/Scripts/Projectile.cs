@@ -10,6 +10,9 @@ public class Projectile : MonoBehaviour
     [SerializeField]
     private float projectileSpeed;
 
+    [SerializeField]
+    private GameObject hitPrefab;
+
     void Start()
     {
         pointOfFire = transform.position;
@@ -27,6 +30,11 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
+         ContactPoint contact = other.contacts[0];
+         Vector3 collidePoint = contact.point;
+         Quaternion rotation = Quaternion.FromToRotation (Vector3.up,contact.normal);
+
+         Instantiate(hitPrefab, collidePoint, rotation);
          Destroy(this.gameObject);
     }
 }
