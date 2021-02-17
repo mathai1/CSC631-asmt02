@@ -35,6 +35,7 @@ public class Projectile : MonoBehaviour
          Quaternion rotation = Quaternion.FromToRotation (Vector3.up,contact.normal);
 
          GameObject particle = Instantiate(hitPrefab, collidePoint, rotation);
+         //particle is destroyed after 0.5 seconds
          Destroy(particle, 0.5f);
          Destroy(this.gameObject);
     }
