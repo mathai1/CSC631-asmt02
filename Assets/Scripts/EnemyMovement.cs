@@ -49,7 +49,6 @@ public class EnemyMovement : MonoBehaviour
     }
     void FixedUpdate(){
         var distance = Vector3.Distance(player.position, transform.position);
-        Debug.Log(distance);
         if (distance > 200f){ moveEnemy(movement); }
         else {
             EnemyShoot.shot.Shoot();
