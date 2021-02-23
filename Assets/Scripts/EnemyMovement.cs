@@ -48,7 +48,12 @@ public class EnemyMovement : MonoBehaviour
         }
     }
     void FixedUpdate(){
-        moveEnemy(movement);
+        var distance = Vector3.Distance(player.position, transform.position);
+        if (distance > 200f){ moveEnemy(movement); }
+        else {
+            EnemyShoot.shot.Shoot();
+        }
+        transform.LookAt(player);
     }
     void moveEnemy(Vector3 direction){
         rb.MovePosition(transform.position +(direction *moveSpeed *Time.deltaTime));
