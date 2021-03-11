@@ -34,7 +34,7 @@ public class CharacterSelect : MonoBehaviour
     public void Confirm()
     {
         if(PlayerPrefs.HasKey("Player")==true){
-            SceneManager.LoadScene("BattleRoom");
+            SceneManager.LoadScene("Hub");
         }
         else{
             Debug.Log("Please Select a Character");

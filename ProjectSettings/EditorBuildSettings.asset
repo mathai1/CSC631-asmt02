@@ -11,4 +11,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/TreasureRoom.unity
     guid: 8d0f50530b25c564fab7236c0db0aecc
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelect.unity
+    guid: 4eca3d43fd0df1b4b9ea6137d93b07d6
+  - enabled: 1
+    path: Assets/Scenes/Hub.unity
+    guid: 6a346f52dbdec8146928624d8742d3e5
   m_configObjects: {}
