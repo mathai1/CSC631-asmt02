@@ -10,18 +10,21 @@ public class MainMenu : MonoBehaviour
 
     private GameObject rootMenuPanel;
 	private GameObject singlePlayerSelectPanel;
+    private GameObject multiPlayerSelectPanel;
 
     // Start is called before the first frame update
     void Start()
     {
         rootMenuPanel = GameObject.Find("RootMenu");
 		singlePlayerSelectPanel = GameObject.Find("SinglePlayerSelect");
+        multiPlayerSelectPanel = GameObject.Find("MultiPlayerSelect");
 
         player1.SetActive(false);
         player2.SetActive(false);
 
         rootMenuPanel.SetActive(true);
         singlePlayerSelectPanel.SetActive(false);
+        multiPlayerSelectPanel.SetActive(false);
     }
     #region RootMenu
     //when single player button is clicked
@@ -38,7 +41,10 @@ public class MainMenu : MonoBehaviour
     public void OnMultiplayerClick()
     {
         rootMenuPanel.SetActive(false);
-        singlePlayerSelectPanel.SetActive(false);
+        multiPlayerSelectPanel.SetActive(true);
+        PlayerPrefs.DeleteAll();
+        player1.SetActive(true);
+        player2.SetActive(true);
     }
     #endregion
 
@@ -78,6 +84,17 @@ public class MainMenu : MonoBehaviour
         player2.SetActive(false);
         rootMenuPanel.SetActive(true);
         singlePlayerSelectPanel.SetActive(false);
+    }
+    #endregion
+
+    #region MultiPlayerMenu
+
+    public void OnLeaveClick()
+    {
+        player1.SetActive(false);
+        player2.SetActive(false);
+        rootMenuPanel.SetActive(true);
+        multiPlayerSelectPanel.SetActive(false);
     }
     #endregion
 }
