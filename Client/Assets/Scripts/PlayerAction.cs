@@ -39,7 +39,7 @@ public class PlayerAction : MonoBehaviour
         //Shoot me pls
          ShootingUpdate();
     }
- 
+    //finding angle between two points
     float AngleBetweenTwoPoints(Vector3 a, Vector3 b) {
         return Mathf.Atan2(a.x -b.x, a.y -b.y) * Mathf.Rad2Deg;
     }
