@@ -1,12 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     public GameObject player1;
     public GameObject player2;
+    private GameObject player1Input;
+	private GameObject player2Input;
 
     private string p1Name = "Player 1";
     private string p2Name = "Player 2";
@@ -14,6 +17,9 @@ public class MainMenu : MonoBehaviour
     private GameObject rootMenuPanel;
 	private GameObject singlePlayerSelectPanel;
     private GameObject multiPlayerSelectPanel;
+    private GameObject messageBox;
+
+    private Text msg;
 
     private NetworkManager networkManager;
     private MessageQueue msgQueue;
@@ -25,12 +31,16 @@ public class MainMenu : MonoBehaviour
 		singlePlayerSelectPanel = GameObject.Find("SinglePlayerSelect");
         multiPlayerSelectPanel = GameObject.Find("MultiPlayerSelect");
 
+        messageBox = GameObject.Find("MessageBox");
+        msg=GameObject.Find("Message").gameObject.GetComponent<Text>();
+
         player1.SetActive(false);
         player2.SetActive(false);
 
         rootMenuPanel.SetActive(true);
         singlePlayerSelectPanel.SetActive(false);
         multiPlayerSelectPanel.SetActive(false);
+        messageBox.SetActive(false);
 
         networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
         msgQueue = networkManager.GetComponent<MessageQueue>();
@@ -57,6 +67,8 @@ public class MainMenu : MonoBehaviour
         bool connected = networkManager.SendJoinRequest();
         if (!connected)
         {
+            msg.text = "Cannot join the server";
+			messageBox.SetActive(true);
             Debug.Log("Cannot join the server");
             return;
         }
@@ -132,7 +144,26 @@ public class MainMenu : MonoBehaviour
             Debug.Log("Please Select a Character");
         }
     }
+    public void OnPlayerNameSet(string name)
+	{
+		Debug.Log("Send SetNameReq: " + name);
+		networkManager.SendSetNameRequest(name);
+		if (Constants.USER_ID == 1)
+		{
+			p1Name = name;
+		}
+		else
+		{
+			p2Name = name;
+		}
+	}
     #endregion
+    
+    public void OnOKClick()
+	{
+		messageBox.SetActive(false);
+	}
+
 
     public void OnResponseJoin(ExtendedEventArgs eventArgs)
     {
