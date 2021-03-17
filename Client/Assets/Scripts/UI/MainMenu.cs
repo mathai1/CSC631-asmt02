@@ -8,9 +8,15 @@ public class MainMenu : MonoBehaviour
     public GameObject player1;
     public GameObject player2;
 
+    private string p1Name = "Player 1";
+    private string p2Name = "Player 2";
+
     private GameObject rootMenuPanel;
 	private GameObject singlePlayerSelectPanel;
     private GameObject multiPlayerSelectPanel;
+
+    private NetworkManager networkManager;
+    private MessageQueue msgQueue;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +31,13 @@ public class MainMenu : MonoBehaviour
         rootMenuPanel.SetActive(true);
         singlePlayerSelectPanel.SetActive(false);
         multiPlayerSelectPanel.SetActive(false);
+
+        networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
+        msgQueue = networkManager.GetComponent<MessageQueue>();
+
+        msgQueue.AddCallback(Constants.SMSG_JOIN, OnResponseJoin);
+        msgQueue.AddCallback(Constants.SMSG_LEAVE, OnResponseLeave);
+        msgQueue.AddCallback(Constants.SMSG_SETNAME, OnResponseSetName);
     }
     #region RootMenu
     //when single player button is clicked
@@ -40,6 +53,13 @@ public class MainMenu : MonoBehaviour
     //when multiplayer button is clicked
     public void OnMultiplayerClick()
     {
+        Debug.Log("Send JoinReq");
+        bool connected = networkManager.SendJoinRequest();
+        if (!connected)
+        {
+            Debug.Log("Cannot join the server");
+            return;
+        }
         rootMenuPanel.SetActive(false);
         multiPlayerSelectPanel.SetActive(true);
         PlayerPrefs.DeleteAll();
@@ -91,10 +111,62 @@ public class MainMenu : MonoBehaviour
 
     public void OnLeaveClick()
     {
+        Debug.Log("Send LeaveReq");
+        networkManager.SendLeaveRequest();
         player1.SetActive(false);
         player2.SetActive(false);
         rootMenuPanel.SetActive(true);
         multiPlayerSelectPanel.SetActive(false);
     }
+
+    public void OnJoinClick()
+    {
+        Debug.Log("Starting Game");
+        networkManager.SendJoinRequest();
+        if (PlayerPrefs.HasKey("Player") == true)
+        {
+            SceneManager.LoadScene("BattleRoom");
+        }
+        else
+        {
+            Debug.Log("Please Select a Character");
+        }
+    }
     #endregion
+
+    public void OnResponseJoin(ExtendedEventArgs eventArgs)
+    {
+        ResponseJoinEventArgs args = eventArgs as ResponseJoinEventArgs;
+        if(args.status == 0)
+        {
+            Debug.Log("status is 0");
+            if (args.user_id == 1)
+            {
+                PlayerPrefs.SetString("Player", "Player1");
+                Debug.Log("Welcome, Player" + args.user_id);
+            }
+            else if (args.user_id == 2)
+            {
+                PlayerPrefs.SetString("Player", "Player2");
+                Debug.Log("Welcome, Player" + args.user_id);
+            }
+            else
+            {
+                Debug.Log("Error : invalid user_id in ResponseJoin " + args.user_id);
+                return;
+            }
+        }
+        
+    }
+
+    public void OnResponseLeave(ExtendedEventArgs eventArgs)
+    {
+        ResponseLeaveEventArgs args = eventArgs as ResponseLeaveEventArgs;
+    }
+
+    public void OnResponseSetName(ExtendedEventArgs eventArgs)
+    {
+        ResponseSetNameEventArgs args = eventArgs as ResponseSetNameEventArgs;
+    }
+
 }

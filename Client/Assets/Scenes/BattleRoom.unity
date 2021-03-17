@@ -2171,6 +2171,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4130883785689925322, guid: 34b6f044644c98246934382999262dc3,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4130883785689925323, guid: 34b6f044644c98246934382999262dc3,
         type: 3}
       propertyPath: enemy

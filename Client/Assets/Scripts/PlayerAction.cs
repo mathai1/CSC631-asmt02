@@ -8,6 +8,7 @@ public class PlayerAction : MonoBehaviour
     public GameObject goldObj;
     public int speed;
     public static int gold;
+    public static int playerName;
 
     // Update is called once per frame
     
