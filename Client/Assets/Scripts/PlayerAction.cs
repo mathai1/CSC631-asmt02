@@ -6,12 +6,19 @@ public class PlayerAction : MonoBehaviour
 {
     public Rigidbody rb;
     public GameObject goldObj;
+    public GameObject target;
     public int speed;
     public static int gold;
     public static int playerName;
+  
 
+    void Start()
+    {
+        target=GameObject.FindWithTag("Player");
+    }
     // Update is called once per frame
     
+
     void FixedUpdate()
     {
         // Code from: https://www.codegrepper.com/code-examples/csharp/unity+wasd+movement
@@ -26,10 +33,10 @@ public class PlayerAction : MonoBehaviour
     {
          
          //Get the Screen positions of the object
-         Vector2 positionOnScreen = UnityEngine.Camera.main.WorldToViewportPoint (transform.position);
+         Vector3 positionOnScreen = UnityEngine.Camera.main.WorldToViewportPoint (transform.position);
          
          //Get the Screen position of the mouse
-         Vector2 mouseOnScreen = (Vector2)UnityEngine.Camera.main.ScreenToViewportPoint(Input.mousePosition);
+         Vector3 mouseOnScreen = (Vector3)UnityEngine.Camera.main.ScreenToViewportPoint(Input.mousePosition);
          
          //Get the angle between the points
          float angle = AngleBetweenTwoPoints(positionOnScreen, mouseOnScreen);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     private bool useNetwork;
     private NetworkManager networkManager;
 
+    public GameObject character1;
+    public GameObject character2;
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -25,6 +27,18 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void SpawnPlayers()
+    {
+        if(PlayerPrefs.GetString("Player")=="Player1")
+        {
+            GameObject char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
+        }
+        if(PlayerPrefs.GetString("Player")=="Player2")
+        {
+            GameObject char2=Instantiate(character2, new Vector3(0,60,-300), Quaternion.identity);
+        }
+    }
+    
 	public void OnResponseMove(ExtendedEventArgs eventArgs)
 	{
 		
