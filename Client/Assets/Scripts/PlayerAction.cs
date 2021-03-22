@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAction : MonoBehaviour
 {
     public Rigidbody rb;
-    public GameObject goldObj;
+    //public GameObject goldObj;
     public GameObject target;
     public int speed;
     public static int gold;
@@ -60,25 +60,5 @@ public class PlayerAction : MonoBehaviour
             WeaponScript.gun.Shoot();
         }
     }
-    //checks for the different types of collision
-    void OnCollisionEnter(Collision collisionInfo)
-    {
-        //Boss drop collision
-        if (collisionInfo.collider.tag=="BossGold")
-        {
-            Debug.Log(gold);
-            gold += 100;
-            goldObj.SetActive(false);
-            Debug.Log(gold);
-        }
-        //treausre drop collission
-        else if (collisionInfo.collider.tag=="Treasure")
-        {
-            Debug.Log(gold);
-            gold += 1000;
-            goldObj.SetActive(false);
-            Debug.Log(gold);
-        }
-    }
-    
+
 }

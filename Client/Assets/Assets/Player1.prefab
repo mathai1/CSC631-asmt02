@@ -110,7 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 5653956395151996106}
-  goldObj: {fileID: 0}
+  goldObj: {fileID: 4617103436381211985, guid: 8695975feab8b044187e1ee7bfbe097a, type: 3}
+  target: {fileID: 0}
   speed: 200
 --- !u!54 &5653956395151996106
 Rigidbody:

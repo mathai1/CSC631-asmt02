@@ -6,8 +6,7 @@ TagManager:
   tags:
   - Gate
   - Bullet
-  - BossGold
-  - Treasure
+  - Gold
   layers:
   - Default
   - TransparentFX
