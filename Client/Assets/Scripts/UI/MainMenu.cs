@@ -78,6 +78,15 @@ public class MainMenu : MonoBehaviour
         player1.SetActive(true);
         player2.SetActive(true);
     }
+
+    public void OnQuitClick()
+    {
+#if UNITY_EDITOR
+		UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
+    }
     #endregion
 
 
