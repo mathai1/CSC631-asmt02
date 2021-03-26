@@ -29,13 +29,21 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPlayers()
     {
-        if(PlayerPrefs.GetString("Player")=="Player1")
+        if(networkManager.IsConnected()==false)
+        {
+            if(PlayerPrefs.GetString("Player")=="Player1")
+            {
+                GameObject char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
+            }
+            if(PlayerPrefs.GetString("Player")=="Player2")
+            {
+                GameObject char2=Instantiate(character2, new Vector3(0,60,-300), Quaternion.identity);
+            }
+        }
+        if(networkManager.IsConnected()==true)
         {
             GameObject char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
-        }
-        if(PlayerPrefs.GetString("Player")=="Player2")
-        {
-            GameObject char2=Instantiate(character2, new Vector3(0,60,-300), Quaternion.identity);
+            GameObject char2=Instantiate(character2, new Vector3(100,60,-300), Quaternion.identity);
         }
     }
     

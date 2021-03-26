@@ -116,4 +116,16 @@ public class NetworkManager : MonoBehaviour
 
 		StartCoroutine(RequestHeartbeat(time));
 	}
+
+	public bool IsConnected()
+	{
+		if (cManager && cManager.IsConnected())
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }
