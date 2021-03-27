@@ -143,7 +143,6 @@ public class MainMenu : MonoBehaviour
     public void OnJoinClick()
     {
         Debug.Log("Starting Game");
-        networkManager.SendJoinRequest();
         if (PlayerPrefs.HasKey("Player") == true)
         {
             SceneManager.LoadScene("BattleRoom");

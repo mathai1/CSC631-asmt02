@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject character1;
     public GameObject character2;
+
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
@@ -56,4 +57,10 @@ public class GameManager : MonoBehaviour
 	{
 		
 	}
+
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Send LeaveReq");
+        networkManager.SendLeaveRequest();
+    }
 }
