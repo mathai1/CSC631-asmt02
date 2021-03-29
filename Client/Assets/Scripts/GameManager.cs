@@ -13,10 +13,14 @@ public class GameManager : MonoBehaviour
 
     public GameObject character1;
     public GameObject character2;
+    
+    private GameObject char1;
+    private GameObject char2;
 
     void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+        //character = GameObject.FindWithTag("Player");
         networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
         MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
         msgQueue.AddCallback(Constants.SMSG_MOVE, OnResponseMove);
@@ -28,28 +32,40 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void OnlineMovement(float x, float y)
+    {
+        if(networkManager.IsConnected()==true){
+            networkManager.SendMoveRequest(x, y);
+        };
+    }
+
     public void SpawnPlayers()
     {
         if(networkManager.IsConnected()==false)
         {
             if(PlayerPrefs.GetString("Player")=="Player1")
             {
-                GameObject char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
+                char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
             }
             if(PlayerPrefs.GetString("Player")=="Player2")
             {
-                GameObject char2=Instantiate(character2, new Vector3(0,60,-300), Quaternion.identity);
+                char2=Instantiate(character2, new Vector3(0,60,-300), Quaternion.identity);
             }
         }
-        if(networkManager.IsConnected()==true)
+        else if(networkManager.IsConnected()==true)
         {
-            GameObject char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
-            GameObject char2=Instantiate(character2, new Vector3(100,60,-300), Quaternion.identity);
+            char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
+            char2=Instantiate(character2, new Vector3(100,60,-300), Quaternion.identity);
         }
     }
     
 	public void OnResponseMove(ExtendedEventArgs eventArgs)
 	{
+		ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
+        float x=args.x;
+        float y=args.y;
+        //Debug.Log(x+" " +y);
+        char1.GetComponent<PlayerAction>().move(x,y);
 		
 	}
 

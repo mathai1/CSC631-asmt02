@@ -8,9 +8,11 @@ import model.Player;
 import networking.response.ResponseMove;
 import utility.DataReader;
 import core.NetworkManager;
+import utility.Log;
 
 public class RequestMove extends GameRequest {
-    private int pieceIndex, x, y;
+    //private float[] inputs;
+    private float x,y;
     // Responses
     private ResponseMove responseMove;
 
@@ -20,17 +22,17 @@ public class RequestMove extends GameRequest {
 
     @Override
     public void parse() throws IOException {
-        pieceIndex = DataReader.readInt(dataInput);
-        x = DataReader.readInt(dataInput);
-        y = DataReader.readInt(dataInput);
+        //pieceIndex = DataReader.readInt(dataInput);
+        x = DataReader.readFloat(dataInput);
+        y = DataReader.readFloat(dataInput);
     }
 
     @Override
     public void doBusiness() throws Exception {
         Player player = client.getPlayer();
-
         responseMove.setPlayer(player);
-        responseMove.setData(pieceIndex, x, y);
+        //Log.printf(x + "  "+ y);
+        responseMove.setData(x, y);
         NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseMove);
     }
 }

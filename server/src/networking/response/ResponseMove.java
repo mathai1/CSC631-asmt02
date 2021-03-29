@@ -11,9 +11,9 @@ import utility.Log;
  */
 public class ResponseMove extends GameResponse {
     private Player player;
-    private int x;
-    private int y;
-    private int index;
+    private float x;
+    private float y;
+    //private int index;
 
     public ResponseMove() {
         responseCode = Constants.SMSG_MOVE;
@@ -23,12 +23,12 @@ public class ResponseMove extends GameResponse {
     public byte[] constructResponseInBytes() {
         GamePacket packet = new GamePacket(responseCode);
         packet.addInt32(player.getID());
-        packet.addInt32(index);
-        packet.addInt32(x);
-        packet.addInt32(y);
+        //packet.addInt32(index);
+        
+        //Log.printf("Player with id %d has moved  to (%a, %a)", player.getID(), x, y);
+        packet.addFloat(x);
+        packet.addFloat(y);
 
-        Log.printf("Player with id %d has moved piece %d to (%d, %d)", player.getID(), index, x, y);
- 
         return packet.getBytes();
     }
 
@@ -36,8 +36,7 @@ public class ResponseMove extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int index, int x, int y) {
-        this.index = index;
+    public void setData(float x, float y) {
         this.y = y; 
         this.x = x;
     }

@@ -11,9 +11,11 @@ public class PlayerAction : MonoBehaviour
     public static int gold;
     public static int playerName;
   
+    private NetworkManager networkManager;
 
     void Start()
     {
+        networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
         target=GameObject.FindWithTag("Player");
     }
     // Update is called once per frame
@@ -23,9 +25,20 @@ public class PlayerAction : MonoBehaviour
     {
         // Code from: https://www.codegrepper.com/code-examples/csharp/unity+wasd+movement
         //movement using wasd or arrow keys
-        Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        this.transform.position += Movement * speed * Time.deltaTime;
+        if(networkManager.IsConnected()==true)
+        {
+            float x= Input.GetAxis("Horizontal");
+            float z= Input.GetAxis("Vertical");
+            FindObjectOfType<GameManager>().OnlineMovement(x,z);
+        }
+        else
+        {
+            move(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
+            //Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            //this.transform.position += Movement * speed * Time.deltaTime;
+        }
     }
+
     
     //Code from: https://answers.unity.com/questions/855976/make-a-player-model-rotate-towards-mouse-location.html
     //character rotation towards mouse 
@@ -52,6 +65,20 @@ public class PlayerAction : MonoBehaviour
         return Mathf.Atan2(a.x -b.x, a.y -b.y) * Mathf.Rad2Deg;
     }
 
+    public void move(float x, float z)
+    {
+        if (networkManager.IsConnected()==false)
+        {
+            Vector3 Movement = new Vector3(x ,0, z);
+            this.transform.position += Movement * speed * Time.deltaTime ;
+        }
+        else
+        {
+            Vector3 Movement = new Vector3(x ,0, z);
+            this.transform.position += Movement * speed * Time.deltaTime * 5;
+        }
+        //Debug.Log(this.transform.position);
+    }
     void ShootingUpdate()
     {
         //if left mouse button
@@ -60,5 +87,5 @@ public class PlayerAction : MonoBehaviour
             WeaponScript.gun.Shoot();
         }
     }
-
+    
 }
