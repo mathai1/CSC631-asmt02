@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     private int currentPlayer = 1;
     private bool choosingInteraction = false;
 
-    private bool useNetwork;
+    private bool useNetwork=MainMenu.useNetwork;
     private NetworkManager networkManager;
 
     public GameObject character1;
@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
                 char2=Instantiate(character2, new Vector3(0,60,-300), Quaternion.identity);
             }
         }
-        else if(networkManager.IsConnected()==true)
+        else
         {
             char1=Instantiate(character1, new Vector3(0,60,-300), Quaternion.identity);
             char2=Instantiate(character2, new Vector3(100,60,-300), Quaternion.identity);
@@ -66,6 +66,7 @@ public class GameManager : MonoBehaviour
         float y=args.y;
         //Debug.Log(x+" " +y);
         char1.GetComponent<PlayerAction>().move(x,y);
+        char2.GetComponent<PlayerAction>().move(x,y);
 		
 	}
 
@@ -78,5 +79,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Send LeaveReq");
         networkManager.SendLeaveRequest();
+        GameObject.Destroy(char1);
+        GameObject.Destroy(char2);
+        PlayerPrefs.DeleteAll();
     }
 }

@@ -10,6 +10,8 @@ public class PlayerAction : MonoBehaviour
     public int speed;
     public static int gold;
     public static int playerName;
+
+    private bool useNetwork=MainMenu.useNetwork;
   
     private NetworkManager networkManager;
 
@@ -25,13 +27,13 @@ public class PlayerAction : MonoBehaviour
     {
         // Code from: https://www.codegrepper.com/code-examples/csharp/unity+wasd+movement
         //movement using wasd or arrow keys
-        if(networkManager.IsConnected()==true)
+        if(useNetwork==true)
         {
             float x= Input.GetAxis("Horizontal");
             float z= Input.GetAxis("Vertical");
             FindObjectOfType<GameManager>().OnlineMovement(x,z);
         }
-        else
+        if(useNetwork==false)
         {
             move(Input.GetAxis("Horizontal"),Input.GetAxis("Vertical"));
             //Vector3 Movement = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
@@ -67,16 +69,8 @@ public class PlayerAction : MonoBehaviour
 
     public void move(float x, float z)
     {
-        if (networkManager.IsConnected()==false)
-        {
-            Vector3 Movement = new Vector3(x ,0, z);
-            this.transform.position += Movement * speed * Time.deltaTime ;
-        }
-        else
-        {
-            Vector3 Movement = new Vector3(x ,0, z);
-            this.transform.position += Movement * speed * Time.deltaTime * 5;
-        }
+        Vector3 Movement = new Vector3(x ,0, z);
+        this.transform.position += Movement * speed * Time.deltaTime ;
         //Debug.Log(this.transform.position);
     }
     void ShootingUpdate()

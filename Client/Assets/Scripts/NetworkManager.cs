@@ -119,13 +119,11 @@ public class NetworkManager : MonoBehaviour
 
 	public bool IsConnected()
 	{
-		if (cManager && cManager.IsConnected())
+		if (cManager && cManager.IsConnected() && MainMenu.useNetwork)
 		{
 			return true;
 		}
-		else
-		{
-			return false;
-		}
+		return false;
+		
 	}
 }

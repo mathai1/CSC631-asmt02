@@ -19,6 +19,8 @@ public class MainMenu : MonoBehaviour
     private GameObject multiPlayerSelectPanel;
     private GameObject messageBox;
 
+    public static bool useNetwork;
+
     private Text msg;
 
     private NetworkManager networkManager;
@@ -27,6 +29,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         rootMenuPanel = GameObject.Find("RootMenu");
 		singlePlayerSelectPanel = GameObject.Find("SinglePlayerSelect");
         multiPlayerSelectPanel = GameObject.Find("MultiPlayerSelect");
@@ -58,6 +61,7 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.DeleteAll();
         player1.SetActive(true);
         player2.SetActive(true);
+        useNetwork=false;
 	}
 
     //when multiplayer button is clicked
@@ -77,6 +81,8 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.DeleteAll();
         player1.SetActive(true);
         player2.SetActive(true);
+
+        useNetwork=true;
     }
 
     public void OnQuitClick()
@@ -138,10 +144,12 @@ public class MainMenu : MonoBehaviour
         player2.SetActive(false);
         rootMenuPanel.SetActive(true);
         multiPlayerSelectPanel.SetActive(false);
+
     }
 
     public void OnJoinClick()
     {
+        useNetwork=true;
         Debug.Log("Starting Game");
         if (PlayerPrefs.HasKey("Player") == true)
         {
@@ -170,6 +178,7 @@ public class MainMenu : MonoBehaviour
     public void OnOKClick()
 	{
 		messageBox.SetActive(false);
+        useNetwork=false;
 	}
 
 
