@@ -2796,6 +2796,7 @@ MonoBehaviour:
     type: 3}
   character2: {fileID: 4130883785689925316, guid: 34b6f044644c98246934382999262dc3,
     type: 3}
+  enemy: {fileID: 5536419964774521631, guid: 063f078a9c70eba41aba5b596a3be9d7, type: 3}
 --- !u!1 &1285882881
 GameObject:
   m_ObjectHideFlags: 0

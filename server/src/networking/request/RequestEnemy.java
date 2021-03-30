@@ -5,19 +5,19 @@ import java.io.IOException;
 
 // Other Imports
 import model.Player;
-import networking.response.ResponseMove;
+import networking.response.ResponseEnemy;
 import utility.DataReader;
 import core.NetworkManager;
 import utility.Log;
 
-public class RequestMove extends GameRequest {
+public class RequestEnemy extends GameRequest {
     //private float[] inputs;
-    private float x,y,angle;
+    private float x,y;
     // Responses
-    private ResponseMove responseMove;
+    private ResponseEnemy responseEnemy;
 
-    public RequestMove() {
-        responses.add(responseMove = new ResponseMove());
+    public RequestEnemy() {
+        responses.add(responseEnemy = new ResponseEnemy());
     }
 
     @Override
@@ -25,15 +25,14 @@ public class RequestMove extends GameRequest {
         //pieceIndex = DataReader.readInt(dataInput);
         x = DataReader.readFloat(dataInput);
         y = DataReader.readFloat(dataInput);
-        angle=DataReader.readFloat(dataInput);
     }
 
     @Override
     public void doBusiness() throws Exception {
         Player player = client.getPlayer();
-        responseMove.setPlayer(player);
+        responseEnemy.setPlayer(player);
         //Log.printf(x + "  "+ y);
-        responseMove.setData(x, y,angle);
-        NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseMove);
+        responseEnemy.setData(x, y);
+        NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseEnemy);
     }
 }

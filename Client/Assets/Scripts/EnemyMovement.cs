@@ -6,7 +6,6 @@ public class EnemyMovement : MonoBehaviour
 {
     //Code From: https://www.youtube.com/watch?v=4Wh22ynlLyk
     public Transform player;
-    public GameObject enemy;
     //public GameObject player1;
     //public GameObject player2;
     public GameObject gold;
@@ -14,12 +13,17 @@ public class EnemyMovement : MonoBehaviour
     private Vector3 movement;
     public float moveSpeed;
     public int health;
+
+    private static GameManager gameManager;
+    public float x;
+    public float z;
+
+    private bool useNetwork=MainMenu.useNetwork;
     
     // Start is called before the first frame update
     void Start()
     {
         rb=this.GetComponent<Rigidbody>();
-        enemy.SetActive(true);
         gold.SetActive(false);
     }
 
@@ -34,23 +38,39 @@ public class EnemyMovement : MonoBehaviour
 
         direction.Normalize();
         movement =direction;
+ 
         //if health is 0 or less then set active to false and gold drop to true
         if (health <= 0)
         {
-            gold.transform.position=transform.position;
-            enemy.SetActive(false);
+            GetComponent<GameManager>().EnemyKilled();
             gold.SetActive(true);
         }
+        
     }
     void FixedUpdate(){
         var distance = Vector3.Distance(player.position, transform.position);
-        if (distance > 200f){ moveEnemy(movement); }
-        else {
-            EnemyShoot.shot.Shoot();
+        if(useNetwork==false){
+            if (distance > 200f)
+            { 
+                moveEnemy(movement); 
+            }
+            else 
+            {
+                EnemyShoot.shot.Shoot();
+            }
+            transform.LookAt(player);
         }
-        transform.LookAt(player);
+        else
+        {
+            if (distance > 200f)
+            { 
+                FindObjectOfType<GameManager>().EnemyOnlineMovement(movement.x , movement.z);
+            }
+
+        }
+       
     }
-    void moveEnemy(Vector3 direction){
+    public void moveEnemy(Vector3 direction){
         rb.MovePosition(transform.position +(direction *moveSpeed *Time.deltaTime));
     }
 

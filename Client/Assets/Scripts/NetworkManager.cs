@@ -79,12 +79,12 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public bool SendMoveRequest(float x, float y)
+	public bool SendMoveRequest(float x, float y,float angle)
 	{
 		if (cManager && cManager.IsConnected())
 		{
 			RequestMove request = new RequestMove();
-			request.send(x,y);
+			request.send(x,y,angle);
 			cManager.send(request);
 			return true;
 		}
@@ -103,6 +103,18 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
+	public bool SendEnemyRequest(float x, float y)
+	{
+		if (cManager && cManager.IsConnected())
+		{
+			RequestEnemy request = new RequestEnemy();
+			request.send(x,y);
+			cManager.send(request);
+			return true;
+		}
+		return false;
+	}
+	
 	public IEnumerator RequestHeartbeat(float time)
 	{
 		yield return new WaitForSeconds(time);

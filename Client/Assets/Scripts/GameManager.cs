@@ -13,9 +13,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject character1;
     public GameObject character2;
+    public GameObject enemy;
+    
     
     private GameObject char1;
     private GameObject char2;
+    private GameObject en;
 
     void Start()
     {
@@ -24,6 +27,7 @@ public class GameManager : MonoBehaviour
         networkManager = GameObject.Find("Network Manager").GetComponent<NetworkManager>();
         MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
         msgQueue.AddCallback(Constants.SMSG_MOVE, OnResponseMove);
+        msgQueue.AddCallback(Constants.SMSG_ENEMY, OnResponseEnemy);
         msgQueue.AddCallback(Constants.SMSG_INTERACT, OnResponseInteract);
     }
 
@@ -32,11 +36,23 @@ public class GameManager : MonoBehaviour
         
     }
 
-    public void OnlineMovement(float x, float y)
+    public void OnlineMovement(float x, float y,float angle)
     {
         if(networkManager.IsConnected()==true){
-            networkManager.SendMoveRequest(x, y);
+            networkManager.SendMoveRequest(x, y,angle);
         };
+
+    }
+    public void EnemyOnlineMovement(float x, float y)
+    {
+        if(networkManager.IsConnected()==true){
+            networkManager.SendEnemyRequest(x, y);
+        };
+
+    }
+    public void EnemyKilled()
+    {
+        
     }
 
     public void SpawnPlayers()
@@ -59,14 +75,33 @@ public class GameManager : MonoBehaviour
         }
     }
     
+    public void SpawnEnemy()
+    {
+        en=Instantiate(enemy, new Vector3(0,60,300), Quaternion.identity);
+    }
 	public void OnResponseMove(ExtendedEventArgs eventArgs)
 	{
 		ResponseMoveEventArgs args = eventArgs as ResponseMoveEventArgs;
         float x=args.x;
         float y=args.y;
+        float angle=args.angle;
         //Debug.Log(x+" " +y);
         char1.GetComponent<PlayerAction>().move(x,y);
+        char1.GetComponent<PlayerAction>().rotate(angle);
+        
         char2.GetComponent<PlayerAction>().move(x,y);
+        char2.GetComponent<PlayerAction>().rotate(angle);
+		
+	}
+
+    public void OnResponseEnemy(ExtendedEventArgs eventArgs)
+	{
+		ResponseEnemyEventArgs args = eventArgs as ResponseEnemyEventArgs;
+
+        float x=args.x;
+        float y=args.y;
+
+        GameObject.FindWithTag("Enemy").GetComponent<EnemyMovement>().moveEnemy(new Vector3(x,0,y));
 		
 	}
 
@@ -81,6 +116,7 @@ public class GameManager : MonoBehaviour
         networkManager.SendLeaveRequest();
         GameObject.Destroy(char1);
         GameObject.Destroy(char2);
+        GameObject.Destroy(enemy);
         PlayerPrefs.DeleteAll();
     }
 }
