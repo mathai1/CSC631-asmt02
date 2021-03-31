@@ -17,6 +17,7 @@ public class ResponseEnemyEventArgs : ExtendedEventArgs
 
 public class ResponseEnemy : NetworkResponse
 {
+	private int user_id;
 	private float x;
 	private float y;
 	//private float angle;
@@ -28,7 +29,7 @@ public class ResponseEnemy : NetworkResponse
 
 	public override void parse()
 	{
-		//user_id = DataReader.ReadInt(dataStream);
+		user_id = DataReader.ReadInt(dataStream);
 		x = DataReader.ReadFloat(dataStream);
 		y = DataReader.ReadFloat(dataStream);
 		//angle = DataReader.ReadFloat(dataStream);
@@ -39,6 +40,7 @@ public class ResponseEnemy : NetworkResponse
 	{
 		ResponseEnemyEventArgs args = new ResponseEnemyEventArgs
 		{
+			user_id = user_id,
 			x = x,
 			y = y
 		};

@@ -251,7 +251,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  enemy: {fileID: 5536419964774521631}
   gold: {fileID: 0}
   moveSpeed: 150
   health: 100

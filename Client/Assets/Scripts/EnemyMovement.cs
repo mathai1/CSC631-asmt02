@@ -23,10 +23,11 @@ public class EnemyMovement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         rb=this.GetComponent<Rigidbody>();
         gold.SetActive(false);
     }
-
+    /***
     // Update is called once per frame
     void Update()
     {
@@ -42,36 +43,48 @@ public class EnemyMovement : MonoBehaviour
         //if health is 0 or less then set active to false and gold drop to true
         if (health <= 0)
         {
-            GetComponent<GameManager>().EnemyKilled();
+            gameManager.EnemyKilled();
             gold.SetActive(true);
         }
         
     }
-    void FixedUpdate(){
-        var distance = Vector3.Distance(player.position, transform.position);
-        if(useNetwork==false){
-            if (distance > 200f)
-            { 
-                moveEnemy(movement); 
-            }
-            else 
-            {
-                EnemyShoot.shot.Shoot();
-            }
-            transform.LookAt(player);
-        }
-        else
-        {
-            if (distance > 200f)
-            { 
-                FindObjectOfType<GameManager>().EnemyOnlineMovement(movement.x , movement.z);
-            }
+    ***/
 
+    void FixedUpdate()
+    {
+        player=GameObject.FindWithTag("Player").transform;
+        if(useNetwork==false)
+        {
+            moveEnemy(player.position.x, player.position.z);
+        }
+        if(useNetwork==true)
+        {
+            FindObjectOfType<GameManager>().EnemyOnlineMovement(player.position.x, player.position.z);
+        }
+        if (health <= 0)
+        {
+            gameManager.EnemyKilled();
+            gold.SetActive(true);
         }
        
     }
-    public void moveEnemy(Vector3 direction){
-        rb.MovePosition(transform.position +(direction *moveSpeed *Time.deltaTime));
+    public void moveEnemy(float playerX, float playerY)
+    {
+
+        Vector3 direction = (new Vector3 (playerX , 0 , playerY))-transform.position;
+        float angle = Mathf.Atan2(direction.y,direction.x)* Mathf.Rad2Deg;
+        rb.rotation =  Quaternion.Euler (new Vector3(0f,angle,0f));
+        direction.Normalize();
+
+        var distance = Vector3.Distance(new Vector3 (playerX , 0 , playerY), transform.position);
+        if(distance >200f)
+        {
+            rb.MovePosition(transform.position + direction *moveSpeed *Time.deltaTime);
+        }
+        else {
+            EnemyShoot.shot.Shoot();
+        }
+        transform.LookAt(player);
     }
 
     void OnCollisionEnter(Collision other)
